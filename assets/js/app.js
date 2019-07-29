@@ -1,75 +1,134 @@
-const seconds = document.querySelector('#seconds');
-const correctAnswer = document.querySelector('.correct')
-const incorrectAnswer = document.querySelector('.incorrect')
+const seconds = document.querySelector("#seconds");
 let wins = 0;
 let losses = 0;
 let unanswered = 0;
 let timeOver;
-let countDown
+let countDown;
 let questionsRemaining = 2;
 let currentQuestion = 0;
 
-
-
-function updateSeconds()  {
-    let secondsRemaining = 5;
-    if(!timeOver) {
-         countDown = setInterval(() => {
-            secondsRemaining--;
-            seconds.textContent = secondsRemaining;
-            console.log(secondsRemaining)
-            if (secondsRemaining < 1) {
-                secondsRemaining = 5
-                timeOver = true;
-                timeRanOut();
-                
-            }
-        }, 1000);
-    }
+function Trivia(
+  name,
+  question,
+  correctAnswer,
+  incorrectAnswerOne,
+  incorrectAnswerTwo,
+  incorrectAnswerThree,
+  img,
+  correctText,
+  incorrectText
+) {
+  this.name = name;
+  this.question = question;
+  this.correctAnswer = correctAnswer;
+  this.incorrectAnswerOne = incorrectAnswerOne;
+  this.incorrectAnswerTwo = incorrectAnswerTwo;
+  this.incorrectAnswerThree = incorrectAnswerThree;
+  this.img = img;
+  this.correctText = correctText;
+  this.incorrectText = incorrectText;
+  this.displayQuestion = function() {
+    $(".question").text(question);
+    $("#incorrect-one").text(incorrectAnswerOne);
+    $("#incorrect-two").text(incorrectAnswerTwo);
+    $("#incorrect-three").text(incorrectAnswerThree);
+    $("img").addClass("hide");
+    $(".incorrect-text").addClass("hide");
+    $(".correct-text").addClass("hide");
+    $("#incorrect-answer").addClass("hide");
+    $("#correct-answer").addClass("hide");
+  };
+  this.updatePageCorrect = function() {
+    // $(".question").text(question);
+    $("#correct").text(correctAnswer);
+    $("#incorrect-one").fadeOut("slow");
+    $("#incorrect-two").fadeOut("slow");
+    $("#incorrect-three").fadeOut("slow");
+    $("img").removeClass("hide");
+    $("img").attr("src", img);
+    $(".correct-text").text(correctText);
+    $(".correct-text").removeClass("hide");
+    $(".incorrect-text").addClass("hide");
+    $("#incorrect-answer").addClass("hide");
+    $("#correct-answer").removeClass("hide");
+  };
+  this.updatePageIncorrect = function() {
+    $("#correct").css({ "text-decoration": "underline" });
+    $(".answers").css("color", "red");
+    $("img").removeClass("hide");
+    $("img").attr("src", img);
+    $(".incorrect-text").text(incorrectText + this.name);
+    $(".incorrect-text").removeClass("hide");
+    $(".correct-text").addClass("hide");
+    $("#incorrect-answer").removeClass("hide");
+    $("#correct-answer").addClass("hide");
+  };
+  this.timesUp = function() {
+    $("#correct").css({ "text-decoration": "underline" });
+    $(".answers").css("color", "red");
+    $("img").removeClass("hide");
+    $("img").attr("src", img);
+    $(".incorrect-text").text("time is up, the correct answer is " + this.name);
+    $(".incorrect-text").removeClass("hide");
+    $(".correct-text").addClass("hide");
+    $("#incorrect-answer").removeClass("hide");
+    $("#correct-answer").addClass("hide");
+  };
 }
 
+const theTown = new Trivia(
+  "The Town",
+  "which of these films was not directed by Martin Scoresese?",
+  "The Town",
+  "The Last Temptation of Christ",
+  "Taxi Driver",
+  "Shutter Island",
+  "./assets/images/download.jpg",
+  "Correct!, The Town was Directed by Ben Afleck",
+  `Incorrect, the answer is `
+);
 
-updateSeconds()
+function updateSeconds() {
+  let secondsRemaining = 5;
+  if (!timeOver) {
+    countDown = setInterval(() => {
+      secondsRemaining--;
+      seconds.textContent = secondsRemaining;
+      console.log(secondsRemaining);
+      if (secondsRemaining < 1) {
+        secondsRemaining = 5;
+        timeOver = true;
+        timeRanOut();
+      }
+    }, 1000);
+  }
+}
 
-document.addEventListener('click', (event) => {
-    let clicked = event.target.id;
-    if (clicked === 'correct') {
-        console.log('you guessed correct');
-        $('.answer-box').removeClass('hide');
-        $('.correct-text').removeClass('hide');
-        $('img').removeClass('hide')
-        $('#correct-answer').removeClass('hide')
-        clearInterval(countDown)
-        updateSeconds()
-        questionsRemaining--;
+// updateSeconds();
 
-    } else if (clicked === 'incorrect') {
-        console.log('wrong again idiot')
-        clearInterval(countDown)
-        updateSeconds()
-        questionsRemaining--;
-
-
-    } 
-    
-
-})
+document.addEventListener("click", event => {
+  let clicked = event.target.id;
+  if (clicked === "correct") {
+    console.log("you guessed correct");
+    theTown.updatePageCorrect();
+    // updateSeconds();
+    clearInterval(countDown);
+    questionsRemaining--;
+  } else if (clicked.includes("incorrect")) {
+    console.log("wrong again idiot");
+    theTown.updatePageIncorrect();
+    // updateSeconds();
+    clearInterval(countDown);
+    questionsRemaining--;
+  }
+});
 
 function timeRanOut() {
-    if (timeOver) {
-        unanswered++;
-        questionsRemaining--;
-        console.log('unanswered: ', unanswered)
-        timeOver = false;
-        nextQuestion()
-    }
+  if (timeOver) {
+    unanswered++;
+    questionsRemaining--;
+    console.log("unanswered: ", unanswered);
+    timeOver = false;
+    theTown.timesUp();
+  }
 }
-
-function nextQuestion() {
-    if(questionsRemaining === 1) {
-        $('.question-two-box').removeClass('hide')
-        $('.question-box').addClass('hide')
-    
-    }
-}
-
