@@ -4,8 +4,7 @@ let losses = 0;
 let unanswered = 0;
 let timeOver;
 let countDown;
-let questionsRemaining = 2;
-let currentQuestion = 0;
+let questionsRemaining = 4;
 
 function Trivia(
   name,
@@ -88,6 +87,18 @@ const theTown = new Trivia(
   `Incorrect, the answer is `
 );
 
+const goodfellas = new Trivia(
+  "Goodfellas",
+  "what film robbed goodfellas of the oscar in 1990?",
+  "Dances With Wolves",
+  "Awakenings",
+  "Ghost",
+  "The Hunt for Red October",
+  "./assets/images/dances-with-wolves.jpg",
+  "Correct! Dances With Wolves went all manifest destiny on Goodfellas",
+  "Incorrect, the answer is "
+);
+
 function updateSeconds() {
   let secondsRemaining = 5;
   if (!timeOver) {
@@ -130,5 +141,13 @@ function timeRanOut() {
     console.log("unanswered: ", unanswered);
     timeOver = false;
     theTown.timesUp();
+  }
+}
+
+function questionGenerator() {
+  if (questionsRemaining === 4) {
+    theTown.displayQuestion();
+  } else if (questionsRemaining === 3) {
+    goodfellas.displayQuestion();
   }
 }
