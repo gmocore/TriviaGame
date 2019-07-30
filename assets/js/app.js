@@ -99,6 +99,8 @@ const goodfellas = new Trivia(
   "Incorrect, the answer is "
 );
 
+let questionsArray = [theTown, goodfellas]
+
 function updateSeconds() {
   let secondsRemaining = 5;
   if (!timeOver) {
@@ -144,10 +146,8 @@ function timeRanOut() {
   }
 }
 
-function questionGenerator() {
-  if (questionsRemaining === 4) {
-    theTown.displayQuestion();
-  } else if (questionsRemaining === 3) {
-    goodfellas.displayQuestion();
-  }
+function questionGenerator(index) {
+    //  index = 0; // TODO: Pick one at random.
+    questionsArray[index].displayQuestion();
+    console.log(index)
 }
