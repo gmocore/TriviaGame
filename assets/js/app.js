@@ -4,7 +4,7 @@ let losses = 0;
 let unanswered = 0;
 let timeOver;
 let countDown;
-let questionsRemaining = 4;
+let currentQuestion = 0;
 
 function Trivia(
   name,
@@ -28,6 +28,7 @@ function Trivia(
   this.incorrectText = incorrectText;
   this.displayQuestion = function() {
     $(".question").text(question);
+    $("#correct").text(correctAnswer);
     $("#incorrect-one").text(incorrectAnswerOne);
     $("#incorrect-two").text(incorrectAnswerTwo);
     $("#incorrect-three").text(incorrectAnswerThree);
@@ -36,13 +37,15 @@ function Trivia(
     $(".correct-text").addClass("hide");
     $("#incorrect-answer").addClass("hide");
     $("#correct-answer").addClass("hide");
+    $("#correct").css({ "text-decoration": "none" });
+    $(".answers").css("color", "black");
   };
   this.updatePageCorrect = function() {
     // $(".question").text(question);
     $("#correct").text(correctAnswer);
-    $("#incorrect-one").fadeOut("slow");
-    $("#incorrect-two").fadeOut("slow");
-    $("#incorrect-three").fadeOut("slow");
+    // $("#incorrect-one").fadeOut("slow");
+    // $("#incorrect-two").fadeOut("slow");
+    // $("#incorrect-three").fadeOut("slow");
     $("img").removeClass("hide");
     $("img").attr("src", img);
     $(".correct-text").text(correctText);
@@ -56,7 +59,7 @@ function Trivia(
     $(".answers").css("color", "red");
     $("img").removeClass("hide");
     $("img").attr("src", img);
-    $(".incorrect-text").text(incorrectText + this.name);
+    $(".incorrect-text").text(incorrectText + this.correctAnswer);
     $(".incorrect-text").removeClass("hide");
     $(".correct-text").addClass("hide");
     $("#incorrect-answer").removeClass("hide");
@@ -99,7 +102,31 @@ const goodfellas = new Trivia(
   "Incorrect, the answer is "
 );
 
-let questionsArray = [theTown, goodfellas]
+const americanPsycho = new Trivia(
+  "American Psycho",
+  "who was originally cast to the the role of Patrick Bateman in American Psycho?",
+  "Leonardo DiCaprio",
+  "Mark Wahlberg",
+  "Jason Bateman",
+  "Meryl Streep",
+  "./assets/images/patrick.png",
+  "Correct! babyface Leo almost got to bathe in the bloodbath",
+  "Incorrect. the correct answer is "
+);
+
+const superHero = new Trivia(
+  "",
+  "Why are superhero movies so popular?",
+  "there is literally no logical reason",
+  "they are good",
+  "special effects are neat",
+  "the writing is groundbreaking",
+  "./assets/images/superhero.jpg",
+  "Correct! we should probably blame the audience as well as lazy hollywood writers",
+  "incorrect, the answer is "
+);
+
+const questionsArray = [theTown, goodfellas, americanPsycho, superHero];
 
 function updateSeconds() {
   let secondsRemaining = 5;
@@ -123,31 +150,51 @@ document.addEventListener("click", event => {
   let clicked = event.target.id;
   if (clicked === "correct") {
     console.log("you guessed correct");
-    theTown.updatePageCorrect();
+    questionsArray[currentQuestion].updatePageCorrect();
     // updateSeconds();
     clearInterval(countDown);
-    questionsRemaining--;
+    currentQuestion++;
+    gameOver();
   } else if (clicked.includes("incorrect")) {
     console.log("wrong again idiot");
-    theTown.updatePageIncorrect();
+    questionsArray[currentQuestion].updatePageIncorrect();
     // updateSeconds();
+    currentQuestion++;
+    gameOver();
     clearInterval(countDown);
-    questionsRemaining--;
   }
+});
+
+$("#start").on("click", function() {
+  console.log(this);
+  updateSeconds();
+  questionsArray[currentQuestion].displayQuestion();
+  gameOver();
 });
 
 function timeRanOut() {
   if (timeOver) {
     unanswered++;
-    questionsRemaining--;
     console.log("unanswered: ", unanswered);
     timeOver = false;
-    theTown.timesUp();
+    questionsArray[currentQuestion].timesUp();
+    setTimeout(() => {
+      questionsArray[currentQuestion].displayQuestion();
+    }, 2000);
+    currentQuestion++;
+    gameOver();
   }
 }
 
 function questionGenerator(index) {
-    //  index = 0; // TODO: Pick one at random.
-    questionsArray[index].displayQuestion();
-    console.log(index)
+  //  index = 0; // TODO: Pick one at random.
+  index = currentQuestion;
+  questionsArray[index].displayQuestion();
+}
+
+function gameOver() {
+  if (currentQuestion > 3) {
+    clearInterval(countDown);
+    currentQuestion = 0;
+  }
 }
