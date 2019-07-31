@@ -7,194 +7,197 @@ let countDown;
 let currentQuestion = 0;
 
 function Trivia(
-  name,
-  question,
-  correctAnswer,
-  incorrectAnswerOne,
-  incorrectAnswerTwo,
-  incorrectAnswerThree,
-  img,
-  correctText,
-  incorrectText
+    name,
+    question,
+    correctAnswer,
+    incorrectAnswerOne,
+    incorrectAnswerTwo,
+    incorrectAnswerThree,
+    img,
+    correctText,
+    incorrectText
 ) {
-  this.name = name;
-  this.question = question;
-  this.correctAnswer = correctAnswer;
-  this.incorrectAnswerOne = incorrectAnswerOne;
-  this.incorrectAnswerTwo = incorrectAnswerTwo;
-  this.incorrectAnswerThree = incorrectAnswerThree;
-  this.img = img;
-  this.correctText = correctText;
-  this.incorrectText = incorrectText;
-  this.displayQuestion = function() {
-    $(".question").text(question);
-    $("#correct").text(correctAnswer);
-    $("#incorrect-one").text(incorrectAnswerOne);
-    $("#incorrect-two").text(incorrectAnswerTwo);
-    $("#incorrect-three").text(incorrectAnswerThree);
-    $("img").addClass("hide");
-    $(".incorrect-text").addClass("hide");
-    $(".correct-text").addClass("hide");
-    $("#incorrect-answer").addClass("hide");
-    $("#correct-answer").addClass("hide");
-    $("#correct").css({ "text-decoration": "none" });
-    $(".answers").css("color", "black");
-  };
-  this.updatePageCorrect = function() {
-    // $(".question").text(question);
-    $("#correct").text(correctAnswer);
-    // $("#incorrect-one").fadeOut("slow");
-    // $("#incorrect-two").fadeOut("slow");
-    // $("#incorrect-three").fadeOut("slow");
-    $("img").removeClass("hide");
-    $("img").attr("src", img);
-    $(".correct-text").text(correctText);
-    $(".correct-text").removeClass("hide");
-    $(".incorrect-text").addClass("hide");
-    $("#incorrect-answer").addClass("hide");
-    $("#correct-answer").removeClass("hide");
-  };
-  this.updatePageIncorrect = function() {
-    $("#correct").css({ "text-decoration": "underline" });
-    $(".answers").css("color", "red");
-    $("img").removeClass("hide");
-    $("img").attr("src", img);
-    $(".incorrect-text").text(incorrectText + this.correctAnswer);
-    $(".incorrect-text").removeClass("hide");
-    $(".correct-text").addClass("hide");
-    $("#incorrect-answer").removeClass("hide");
-    $("#correct-answer").addClass("hide");
-  };
-  this.timesUp = function() {
-    $("#correct").css({ "text-decoration": "underline" });
-    $(".answers").css("color", "red");
-    $("img").removeClass("hide");
-    $("img").attr("src", img);
-    $(".incorrect-text").text("time is up, the correct answer is " + this.name);
-    $(".incorrect-text").removeClass("hide");
-    $(".correct-text").addClass("hide");
-    $("#incorrect-answer").removeClass("hide");
-    $("#correct-answer").addClass("hide");
-  };
+    this.name = name;
+    this.question = question;
+    this.correctAnswer = correctAnswer;
+    this.incorrectAnswerOne = incorrectAnswerOne;
+    this.incorrectAnswerTwo = incorrectAnswerTwo;
+    this.incorrectAnswerThree = incorrectAnswerThree;
+    this.img = img;
+    this.correctText = correctText;
+    this.incorrectText = incorrectText;
+    this.displayQuestion = function () {
+        $(".question").removeClass('hide');
+        $(".question").text(question);
+        $('.answers').removeClass('hide')
+        $("#correct").text(correctAnswer);
+        $("#incorrect-one").text(incorrectAnswerOne);
+        $("#incorrect-two").text(incorrectAnswerTwo);
+        $("#incorrect-three").text(incorrectAnswerThree);
+        $("img").addClass("hide");
+        $(".incorrect-text").addClass("hide");
+        $(".correct-text").addClass("hide");
+        $("#incorrect-answer").addClass("hide");
+        $("#correct-answer").addClass("hide");
+        $("#correct").css({ "text-decoration": "none" });
+        $(".answers").css("color", "black");
+    };
+    this.updatePageCorrect = function () {
+        $(".question").text(question);
+        $('.answers').removeClass('hide')
+        $("#correct").text(correctAnswer);
+        $("img").removeClass("hide");
+        $("img").attr("src", img);
+        $(".correct-text").text(correctText);
+        $(".correct-text").removeClass("hide");
+        $(".incorrect-text").addClass("hide");
+        $("#incorrect-answer").addClass("hide");
+        $("#correct-answer").removeClass("hide");
+    };
+    this.updatePageIncorrect = function () {
+        $("#correct").css({ "text-decoration": "underline" });
+        $(".answers").css("color", "red");
+        $("img").removeClass("hide");
+        $("img").attr("src", img);
+        $(".incorrect-text").text(incorrectText + this.correctAnswer);
+        $(".incorrect-text").removeClass("hide");
+        $(".correct-text").addClass("hide");
+        $("#incorrect-answer").removeClass("hide");
+        $("#correct-answer").addClass("hide");
+    };
+    this.timesUp = function () {
+        $("#correct").css({ "text-decoration": "underline" });
+        $(".answers").css("color", "red");
+        $("img").removeClass("hide");
+        $("img").attr("src", img);
+        $(".incorrect-text").text("time is up, the correct answer is " + this.name);
+        $(".incorrect-text").removeClass("hide");
+        $(".correct-text").addClass("hide");
+        $("#incorrect-answer").removeClass("hide");
+        $("#correct-answer").addClass("hide");
+    };
 }
 
 const theTown = new Trivia(
-  "The Town",
-  "which of these films was not directed by Martin Scoresese?",
-  "The Town",
-  "The Last Temptation of Christ",
-  "Taxi Driver",
-  "Shutter Island",
-  "./assets/images/download.jpg",
-  "Correct!, The Town was Directed by Ben Afleck",
-  `Incorrect, the answer is `
+    "The Town",
+    "which of these films was not directed by Martin Scoresese?",
+    "The Town",
+    "The Last Temptation of Christ",
+    "Taxi Driver",
+    "Shutter Island",
+    "./assets/images/download.jpg",
+    "Correct!, The Town was Directed by Ben Afleck",
+    `Incorrect, the answer is `
 );
 
 const goodfellas = new Trivia(
-  "Goodfellas",
-  "what film robbed goodfellas of the oscar in 1990?",
-  "Dances With Wolves",
-  "Awakenings",
-  "Ghost",
-  "The Hunt for Red October",
-  "./assets/images/dances-with-wolves.jpg",
-  "Correct! Dances With Wolves went all manifest destiny on Goodfellas",
-  "Incorrect, the answer is "
+    "Goodfellas",
+    "what film robbed goodfellas of the oscar in 1990?",
+    "Dances With Wolves",
+    "Awakenings",
+    "Ghost",
+    "The Hunt for Red October",
+    "./assets/images/dances-with-wolves.jpg",
+    "Correct! Dances With Wolves went all manifest destiny on Goodfellas",
+    "Incorrect, the answer is "
 );
 
 const americanPsycho = new Trivia(
-  "American Psycho",
-  "who was originally cast to the the role of Patrick Bateman in American Psycho?",
-  "Leonardo DiCaprio",
-  "Mark Wahlberg",
-  "Jason Bateman",
-  "Meryl Streep",
-  "./assets/images/patrick.png",
-  "Correct! babyface Leo almost got to bathe in the bloodbath",
-  "Incorrect. the correct answer is "
+    "American Psycho",
+    "who was originally cast to the the role of Patrick Bateman in American Psycho?",
+    "Leonardo DiCaprio",
+    "Mark Wahlberg",
+    "Jason Bateman",
+    "Meryl Streep",
+    "./assets/images/patrick.png",
+    "Correct! babyface Leo almost got to bathe in the bloodbath",
+    "Incorrect. the correct answer is "
 );
 
 const superHero = new Trivia(
-  "",
-  "Why are superhero movies so popular?",
-  "there is literally no logical reason",
-  "they are good",
-  "special effects are neat",
-  "the writing is groundbreaking",
-  "./assets/images/superhero.jpg",
-  "Correct! we should probably blame the audience as well as lazy hollywood writers",
-  "incorrect, the answer is "
+    "",
+    "Why are superhero movies so popular?",
+    "there is literally no logical reason",
+    "they are good",
+    "special effects are neat",
+    "the writing is groundbreaking",
+    "./assets/images/superhero.jpg",
+    "Correct! we should probably blame the audience as well as lazy hollywood writers",
+    "incorrect, the answer is "
 );
 
 const questionsArray = [theTown, goodfellas, americanPsycho, superHero];
 
 function updateSeconds() {
-  let secondsRemaining = 5;
-  if (!timeOver) {
-    countDown = setInterval(() => {
-      secondsRemaining--;
-      seconds.textContent = secondsRemaining;
-      console.log(secondsRemaining);
-      if (secondsRemaining < 1) {
-        secondsRemaining = 5;
-        timeOver = true;
-        timeRanOut();
-      }
-    }, 1000);
-  }
+    let secondsRemaining = 5;
+    if (!timeOver) {
+        countDown = setInterval(() => {
+            secondsRemaining--;
+            seconds.textContent = secondsRemaining;
+            console.log(secondsRemaining);
+            if (secondsRemaining < 1) {
+                secondsRemaining = 5;
+                timeOver = true;
+                timeRanOut();
+            }
+        }, 1000);
+    }
 }
 
 // updateSeconds();
 
 document.addEventListener("click", event => {
-  let clicked = event.target.id;
-  if (clicked === "correct") {
-    console.log("you guessed correct");
-    questionsArray[currentQuestion].updatePageCorrect();
-    // updateSeconds();
-    clearInterval(countDown);
-    currentQuestion++;
-    gameOver();
-  } else if (clicked.includes("incorrect")) {
-    console.log("wrong again idiot");
-    questionsArray[currentQuestion].updatePageIncorrect();
-    // updateSeconds();
-    currentQuestion++;
-    gameOver();
-    clearInterval(countDown);
-  }
+    let clicked = event.target.id;
+    if (clicked === "correct") {
+        console.log("you guessed correct");
+        questionsArray[currentQuestion].updatePageCorrect();
+        setTimeout(() => {
+            // updateSeconds();
+            clearInterval(countDown);
+            currentQuestion++;
+            gameOver();
+            questionGenerator()
+        }, 3000);
+    } else if (clicked.includes("incorrect")) {
+        console.log("wrong again idiot");
+        questionsArray[currentQuestion].updatePageIncorrect();
+        // updateSeconds();
+        currentQuestion++;
+        gameOver();
+        clearInterval(countDown);
+    }
 });
 
-$("#start").on("click", function() {
-  console.log(this);
-  updateSeconds();
-  questionsArray[currentQuestion].displayQuestion();
-  gameOver();
+$("#start").on("click", function () {
+    console.log(this);
+    updateSeconds();
+    questionsArray[currentQuestion].displayQuestion();
+    gameOver();
 });
 
 function timeRanOut() {
-  if (timeOver) {
-    unanswered++;
-    console.log("unanswered: ", unanswered);
-    timeOver = false;
-    questionsArray[currentQuestion].timesUp();
-    setTimeout(() => {
-      questionsArray[currentQuestion].displayQuestion();
-    }, 2000);
-    currentQuestion++;
-    gameOver();
-  }
+    if (timeOver) {
+        unanswered++;
+        console.log("unanswered: ", unanswered);
+        timeOver = false;
+        questionsArray[currentQuestion].timesUp();
+        setTimeout(() => {
+            questionsArray[currentQuestion].displayQuestion();
+        }, 2000);
+        currentQuestion++;
+        gameOver();
+    }
 }
 
 function questionGenerator(index) {
-  //  index = 0; // TODO: Pick one at random.
-  index = currentQuestion;
-  questionsArray[index].displayQuestion();
+    // TODO: Pick one at random.
+    index = currentQuestion;
+    questionsArray[index].displayQuestion();
 }
 
 function gameOver() {
-  if (currentQuestion > 3) {
-    clearInterval(countDown);
-    currentQuestion = 0;
-  }
+    if (currentQuestion > 3) {
+        clearInterval(countDown);
+        currentQuestion = 0;
+    }
 }

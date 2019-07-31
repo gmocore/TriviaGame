@@ -14,3 +14,8 @@ img {
 .hide {
     display: none;
 }
+
+.header {
+    background-color: gray;
+    color: white;
+}
