@@ -34,6 +34,7 @@ function Trivia(
     $(".question").removeClass("hide");
     $(".question").text(question);
     $(".answers").removeClass("hide");
+    $(".answers").css({ color: "#fdfffc" });
     $("#correct").text(correctAnswer);
     $("#incorrect-one").text(incorrectAnswerOne);
     $("#incorrect-two").text(incorrectAnswerTwo);
@@ -70,11 +71,13 @@ function Trivia(
     $("#correct-answer").addClass("hide");
   };
   this.timesUp = function() {
-    $("#correct").css({ "text-decoration": "underline" });
+    $("#correct").css({ "text-decoration": "underline", color: "green" });
     $(".answers").css("color", "#FF9770");
     $("img").removeClass("hide");
     $("img").attr("src", img);
-    $(".incorrect-text").text("time is up, the correct answer is " + this.name);
+    $(".incorrect-text").text(
+      "time is up, the correct answer is " + this.correctAnswer
+    );
     $(".incorrect-text").removeClass("hide");
     $(".correct-text").addClass("hide");
     $("#incorrect-answer").removeClass("hide");
@@ -161,7 +164,6 @@ function resetTimer() {
     seconds.textContent = secondsRemaining;
     console.log(secondsRemaining);
     if (secondsRemaining < 1) {
-      secondsRemaining = 5;
       timeOver = true;
       timeRanOut();
     }
@@ -174,8 +176,9 @@ function timeRanOut() {
     console.log("unanswered: ", unanswered);
     timeOver = false;
     questionsArray[currentQuestion].timesUp();
+    clearInterval(countDown);
     setTimeout(() => {
-      questionsArray[currentQuestion].displayQuestion();
+      questionGenerator();
     }, 2000);
     currentQuestion++;
     gameOver();
@@ -185,15 +188,18 @@ function timeRanOut() {
 function questionGenerator(index) {
   // TODO: Pick one at random.
   index = currentQuestion;
-  questionsArray[index].displayQuestion();
-  clearInterval(countDown);
-  resetTimer();
+  if (currentQuestion < 4) {
+    questionsArray[index].displayQuestion();
+    clearInterval(countDown);
+    resetTimer();
+  }
 }
 
 function gameOver() {
   if (currentQuestion > 3) {
     clearInterval(countDown);
-    currentQuestion = 0;
+    // currentQuestion = 0;
+    document.write("game over");
   }
 }
 
@@ -222,8 +228,6 @@ document.addEventListener("click", event => {
 });
 
 $("#start").on("click", function() {
-  console.log(this);
   updateSeconds();
   questionsArray[currentQuestion].displayQuestion();
-  gameOver();
 });

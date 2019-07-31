@@ -39,12 +39,31 @@ body {
   align-items: center;
 }
 
+.answers {
+  transition: 0.5s ease;
+}
+
+.answers:hover {
+  letter-spacing: 1px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.answer-response {
+  margin-bottom: 15px;
+}
+
 img {
   height: 22em;
   width: auto;
+  margin: 25px;
   border-radius: 5px;
   border: 1px solid #fdfffc;
   box-shadow: 10px 10px 11px -8px rgba(0, 0, 0, 0.75);
+}
+
+.result {
+  font-size: 1.5em;
 }
 
 .hide {
