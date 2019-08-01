@@ -25,3 +25,17 @@
 - special effects are neat
 - the writing is groundbreaking
 - there is literally no logical reason
+
+#which actor chose not shoot scenes with pants on so the camera would not be able to show how much weight they gained?
+
+- Marlon Brando
+- Jack Nicholson
+- Val Kilmer
+- Christian Bale
+
+#What item was used to simulate camera flashbulbs in Raging Bull?
+
+- Bear traps
+- firecrackers
+- glassware
+- a camera flashbulb

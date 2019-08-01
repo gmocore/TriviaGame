@@ -30,9 +30,9 @@ function Trivia(
   this.img = img;
   this.correctText = correctText;
   this.incorrectText = incorrectText;
+  // displays the current question
   this.displayQuestion = function() {
     $(".intro").addClass("hide");
-    //   $('#start').addClass('hide')
     $(".question-box").removeClass("hide");
     $(".question").removeClass("hide");
     $(".question").text(question);
@@ -48,8 +48,8 @@ function Trivia(
     $("#incorrect-answer").addClass("hide");
     $("#correct-answer").addClass("hide");
     $("#correct").css({ "text-decoration": "none" });
-    // $(".answers").css("color", "black");
   };
+  // updates page if answer is incorrect
   this.updatePageCorrect = function() {
     $(".question").text(question);
     $(".answers").removeClass("hide");
@@ -62,6 +62,7 @@ function Trivia(
     $("#incorrect-answer").addClass("hide");
     $("#correct-answer").removeClass("hide");
   };
+  // updates page if incorrect
   this.updatePageIncorrect = function() {
     $("#correct").css({ "text-decoration": "underline" });
     $(".answers").css("color", "#FF9770");
@@ -73,6 +74,7 @@ function Trivia(
     $("#incorrect-answer").removeClass("hide");
     $("#correct-answer").addClass("hide");
   };
+  // update spage if time runs out
   this.timesUp = function() {
     $("#correct").css({ "text-decoration": "underline", color: "green" });
     $(".answers").css("color", "#FF9770");
@@ -92,7 +94,7 @@ function Trivia(
 
 const theTown = new Trivia(
   "The Town",
-  "which of these films was not directed by Martin Scoresese?",
+  "which of these films was not directed by Martin Scorsese?",
   "The Town",
   "The Last Temptation of Christ",
   "Taxi Driver",
@@ -144,6 +146,7 @@ const questionsArray = [theTown, goodfellas, americanPsycho, superHero];
 
 // FUNCTIONS
 
+// updates the countdown
 function updateSeconds() {
   secondsRemaining = 5;
   if (!timeOver) {
@@ -160,6 +163,7 @@ function updateSeconds() {
   }
 }
 
+//reset the timer
 function resetTimer() {
   secondsRemaining = 5;
   countDown = setInterval(() => {
@@ -173,6 +177,7 @@ function resetTimer() {
   }, 1000);
 }
 
+//handles unanswered/no click event
 function timeRanOut() {
   if (timeOver) {
     unanswered++;
@@ -188,6 +193,7 @@ function timeRanOut() {
   }
 }
 
+// displays current question
 function questionGenerator(index) {
   // TODO: Pick one at random.
   index = currentQuestion;
@@ -198,6 +204,7 @@ function questionGenerator(index) {
   }
 }
 
+//check if the game is over
 function gameOver() {
   if (currentQuestion > 3) {
     clearInterval(countDown);
@@ -210,6 +217,7 @@ function gameOver() {
   }
 }
 
+//resets game to default values
 function resetGame() {
   currentQuestion = 0;
   wins = 0;
@@ -220,7 +228,7 @@ function resetGame() {
 
 // EVENT LISTENERS
 
-document.addEventListener("click", event => {
+$(".answers").on("click", event => {
   let clicked = event.target.id;
   if (clicked === "correct") {
     console.log("you guessed correct");
