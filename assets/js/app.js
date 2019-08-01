@@ -31,6 +31,9 @@ function Trivia(
   this.correctText = correctText;
   this.incorrectText = incorrectText;
   this.displayQuestion = function() {
+      $('.intro').addClass('hide')
+    //   $('#start').addClass('hide')
+    $('.question-box').removeClass('hide')
     $(".question").removeClass("hide");
     $(".question").text(question);
     $(".answers").removeClass("hide");
@@ -119,7 +122,7 @@ const americanPsycho = new Trivia(
   "Jason Bateman",
   "Meryl Streep",
   "./assets/images/patrick.png",
-  "Correct! babyface Leo almost got to bathe in the bloodbath",
+  "Correct! babyface Leo almost got to bathe in the bloodshed",
   "Incorrect. the correct answer is "
 );
 
