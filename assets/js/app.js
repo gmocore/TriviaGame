@@ -31,9 +31,9 @@ function Trivia(
   this.correctText = correctText;
   this.incorrectText = incorrectText;
   this.displayQuestion = function() {
-      $('.intro').addClass('hide')
+    $(".intro").addClass("hide");
     //   $('#start').addClass('hide')
-    $('.question-box').removeClass('hide')
+    $(".question-box").removeClass("hide");
     $(".question").removeClass("hide");
     $(".question").text(question);
     $(".answers").removeClass("hide");
@@ -202,8 +202,20 @@ function gameOver() {
   if (currentQuestion > 3) {
     clearInterval(countDown);
     // currentQuestion = 0;
-    document.write("game over");
+    $(".game-over").removeClass("hide");
+    $(".game-container").addClass("hide");
+    $("#correct-points").text(wins);
+    $("#incorrect-points").text(losses);
+    $("#unanswered-points").text(unanswered);
   }
+}
+
+function resetGame() {
+  currentQuestion = 0;
+  wins = 0;
+  losses = 0;
+  unanswered = 0;
+  questionGenerator(currentQuestion);
 }
 
 // EVENT LISTENERS
@@ -212,6 +224,7 @@ document.addEventListener("click", event => {
   let clicked = event.target.id;
   if (clicked === "correct") {
     console.log("you guessed correct");
+    wins++;
     questionsArray[currentQuestion].updatePageCorrect();
     clearInterval(countDown);
     setTimeout(() => {
@@ -223,14 +236,25 @@ document.addEventListener("click", event => {
   } else if (clicked.includes("incorrect")) {
     console.log("wrong again idiot");
     questionsArray[currentQuestion].updatePageIncorrect();
-    // updateSeconds();
-    currentQuestion++;
+    losses++;
     gameOver();
     clearInterval(countDown);
+    setTimeout(() => {
+      currentQuestion++;
+      gameOver();
+      questionGenerator();
+    }, 3000);
   }
 });
 
 $("#start").on("click", function() {
   updateSeconds();
   questionsArray[currentQuestion].displayQuestion();
+  $("#start").addClass("hide");
+});
+
+$("#reset").on("click", function() {
+  $(".game-container").removeClass("hide");
+  $(".game-over").addClass("hide");
+  resetGame();
 });
