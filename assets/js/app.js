@@ -7,6 +7,8 @@ let timeOver;
 let countDown;
 let currentQuestion = 0;
 let secondsRemaining;
+let answered = false;
+
 
 // QUESTION OBJECT CONSTRUCTOR
 
@@ -195,12 +197,12 @@ function timeRanOut() {
 
 // displays current question
 function questionGenerator(index) {
-  // TODO: Pick one at random.
   index = currentQuestion;
   if (currentQuestion < 4) {
     questionsArray[index].displayQuestion();
     clearInterval(countDown);
     resetTimer();
+    answered = false;
   }
 }
 
@@ -230,28 +232,33 @@ function resetGame() {
 
 $(".answers").on("click", event => {
   let clicked = event.target.id;
-  if (clicked === "correct") {
-    console.log("you guessed correct");
-    wins++;
-    questionsArray[currentQuestion].updatePageCorrect();
-    clearInterval(countDown);
-    setTimeout(() => {
-      // updateSeconds();
-      currentQuestion++;
+  if(!answered) {
+    if (clicked === "correct") {
+      console.log("you guessed correct");
+      wins++;
+      answered = true;
+      questionsArray[currentQuestion].updatePageCorrect();
+      clearInterval(countDown);
+      setTimeout(() => {
+        // updateSeconds();
+        currentQuestion++;
+        gameOver();
+        questionGenerator();
+      }, 3000);
+
+    } else if (clicked.includes("incorrect")) {
+      console.log("wrong again idiot");
+      questionsArray[currentQuestion].updatePageIncorrect();
+      losses++;
+      answered = true;
       gameOver();
-      questionGenerator();
-    }, 3000);
-  } else if (clicked.includes("incorrect")) {
-    console.log("wrong again idiot");
-    questionsArray[currentQuestion].updatePageIncorrect();
-    losses++;
-    gameOver();
-    clearInterval(countDown);
-    setTimeout(() => {
-      currentQuestion++;
-      gameOver();
-      questionGenerator();
-    }, 3000);
+      clearInterval(countDown);
+      setTimeout(() => {
+        currentQuestion++;
+        gameOver();
+        questionGenerator();
+      }, 3000);
+    }
   }
 });
 
