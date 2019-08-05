@@ -1,4 +1,5 @@
-//  VARIABLES
+//////////////  VARIABLES  //////////////////////
+
 const seconds = document.querySelector("#seconds");
 let wins = 0;
 let losses = 0;
@@ -9,8 +10,7 @@ let currentQuestion = 0;
 let secondsRemaining;
 let answered = false;
 
-
-// QUESTION OBJECT CONSTRUCTOR
+////////////// QUESTION OBJECT CONSTRUCTOR //////////////
 
 function Trivia(
   name,
@@ -50,6 +50,7 @@ function Trivia(
     $("#incorrect-answer").addClass("hide");
     $("#correct-answer").addClass("hide");
     $("#correct").css({ "text-decoration": "none" });
+    $("#seconds").text("10");
   };
   // updates page if answer is incorrect
   this.updatePageCorrect = function() {
@@ -76,7 +77,7 @@ function Trivia(
     $("#incorrect-answer").removeClass("hide");
     $("#correct-answer").addClass("hide");
   };
-  // update spage if time runs out
+  // updates page if time runs out
   this.timesUp = function() {
     $("#correct").css({ "text-decoration": "underline", color: "green" });
     $(".answers").css("color", "#FF9770");
@@ -92,7 +93,7 @@ function Trivia(
   };
 }
 
-//CONSTRUCTED QUESTION OBJECTS
+//////////// CONSTRUCTED QUESTION OBJECTS ////////////
 
 const theTown = new Trivia(
   "The Town",
@@ -142,22 +143,22 @@ const superHero = new Trivia(
   "incorrect, the answer is "
 );
 
-// ARRAY TO STORE OBJECTS
+////////////// ARRAY TO STORE OBJECTS ////////////
 
 const questionsArray = [theTown, goodfellas, americanPsycho, superHero];
 
-// FUNCTIONS
+////////////// FUNCTIONS ////////////
 
 // updates the countdown
 function updateSeconds() {
-  secondsRemaining = 5;
+  secondsRemaining = 10;
   if (!timeOver) {
     countDown = setInterval(() => {
       secondsRemaining--;
       seconds.textContent = secondsRemaining;
       console.log(secondsRemaining);
       if (secondsRemaining < 1) {
-        secondsRemaining = 5;
+        secondsRemaining = 10;
         timeOver = true;
         timeRanOut();
       }
@@ -167,7 +168,7 @@ function updateSeconds() {
 
 //reset the timer
 function resetTimer() {
-  secondsRemaining = 5;
+  secondsRemaining = 10;
   countDown = setInterval(() => {
     secondsRemaining--;
     seconds.textContent = secondsRemaining;
@@ -189,7 +190,7 @@ function timeRanOut() {
     clearInterval(countDown);
     setTimeout(() => {
       questionGenerator();
-    }, 2000);
+    }, 4000);
     currentQuestion++;
     gameOver();
   }
@@ -228,13 +229,13 @@ function resetGame() {
   questionGenerator(currentQuestion);
 }
 
-// EVENT LISTENERS
+////////////// EVENT LISTENERS ////////////
 
 $(".answers").on("click", event => {
   let clicked = event.target.id;
-  if(!answered) {
+  // ensures only 1 answer can be selected per question
+  if (!answered) {
     if (clicked === "correct") {
-      console.log("you guessed correct");
       wins++;
       answered = true;
       questionsArray[currentQuestion].updatePageCorrect();
@@ -244,10 +245,8 @@ $(".answers").on("click", event => {
         currentQuestion++;
         gameOver();
         questionGenerator();
-      }, 3000);
-
+      }, 4000);
     } else if (clicked.includes("incorrect")) {
-      console.log("wrong again idiot");
       questionsArray[currentQuestion].updatePageIncorrect();
       losses++;
       answered = true;
@@ -257,7 +256,7 @@ $(".answers").on("click", event => {
         currentQuestion++;
         gameOver();
         questionGenerator();
-      }, 3000);
+      }, 4000);
     }
   }
 });

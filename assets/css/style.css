@@ -59,7 +59,6 @@ button {
 }
 
 .answer-box {
-  /* margin-top: 5%; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -73,7 +72,6 @@ button {
 
 .answers:hover {
   letter-spacing: 1px;
-  /* text-decoration: underline; */
   cursor: pointer;
 }
 
@@ -90,7 +88,7 @@ button {
 img {
   height: 22em;
   width: auto;
-  margin: 25px;
+  margin: 15px;
   border-radius: 5px;
   border: 1px solid #fdfffc;
   box-shadow: 10px 10px 11px -8px rgba(0, 0, 0, 0.75);
@@ -112,7 +110,6 @@ img {
 }
 
 .main-text {
-  /* height: 200px; */
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
